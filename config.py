@@ -11,3 +11,5 @@ MIN_SUPPLY = os.getenv('MIN_SUPPLY')
 MAX_SUPPLY = os.getenv('MAX_SUPPLY')
 MIN_PRICE = os.getenv('MIN_PRICE')
 MAX_PRICE = os.getenv('MAX_PRICE')
+
+CYCLES = os.getenv("CYCLES")

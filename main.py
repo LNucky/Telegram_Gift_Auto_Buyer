@@ -1,5 +1,5 @@
 from telethon.sync import TelegramClient, functions, types
-from config import API_ID, API_HASH, MY_CHANNEL_ID, MIN_SUPPLY, MAX_SUPPLY, MIN_PRICE, MAX_PRICE
+from config import API_ID, API_HASH, MY_CHANNEL_ID, MIN_SUPPLY, MAX_SUPPLY, MIN_PRICE, MAX_PRICE, CYCLES
 from time import sleep
 
 # cheapest_gift_id = '5170145012310081615' # for tests
@@ -71,17 +71,18 @@ def main():
             new_gifts = check_new_gifts(client)
             if new_gifts:
                 print(f'{len(new_gifts)} new gifts were found')
-                for gift_data in new_gifts:
-                    print(gift_data['id'])
-                    if gift_filter(gift_data, MIN_SUPPLY, MAX_SUPPLY, MIN_PRICE, MAX_PRICE):
-                        gift_id = gift_data['id']
-                        buy_gift(client, int(MY_CHANNEL_ID), gift_id)
-                        print(f'Bought a gift: {gift_data['id']}\n'
-                            f'supply: {gift_data['availability_total']}\n'
-                            f'price: {gift_data['stars']}\n')
-                    else:
-                        print('There are no filter-available gifts')
-                break
+                for cycle in range(CYCLES):
+                    for gift_data in new_gifts:
+                        print(gift_data['id'])
+                        if gift_filter(gift_data, MIN_SUPPLY, MAX_SUPPLY, MIN_PRICE, MAX_PRICE):
+                            gift_id = gift_data['id']
+                            buy_gift(client, int(MY_CHANNEL_ID), gift_id)
+                            print(f'Bought a gift: {gift_data['id']}\n'
+                                f'supply: {gift_data['availability_total']}\n'
+                                f'price: {gift_data['stars']}\n')
+                        else:
+                            print('There are no filter-available gifts')
+                    break
             tries += 1
             print(f'Try {tries}')
             sleep(1)
