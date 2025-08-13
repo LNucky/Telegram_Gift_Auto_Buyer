@@ -67,7 +67,8 @@ def gift_filter(gift_data: dict,
 def main():
     with TelegramClient(api_id=API_ID, api_hash=API_HASH, session='session') as client:
         tries = 0
-        while True:
+        monitor = True
+        while monitor:
             new_gifts = check_new_gifts(client)
             if new_gifts:
                 print(f'{len(new_gifts)} new gifts were found')
@@ -82,7 +83,7 @@ def main():
                                 f'price: {gift_data['stars']}\n')
                         else:
                             print('There are no filter-available gifts')
-                    break
+                monitor = False
             tries += 1
             print(f'Try {tries}')
             sleep(1)
