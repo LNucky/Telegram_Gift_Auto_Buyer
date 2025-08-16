@@ -3,7 +3,7 @@ from config import API_ID, API_HASH, MY_CHANNEL_ID, MIN_SUPPLY, MAX_SUPPLY, MIN_
 from time import sleep
 
 # cheapest_gift_id = '5170145012310081615' # for tests
-
+print(type(MIN_PRICE))
     
 def buy_gift(client, channel_id: int, gift_id: int):
     peer = client.get_input_entity(channel_id)
@@ -72,12 +72,12 @@ def main():
             new_gifts = check_new_gifts(client)
             if new_gifts:
                 print(f'{len(new_gifts)} new gifts were found')
-                for cycle in range(CYCLES):
+                for cycle in range(int(CYCLES)):
                     for gift_data in new_gifts:
                         print(gift_data['id'])
-                        if gift_filter(gift_data, MIN_SUPPLY, MAX_SUPPLY, MIN_PRICE, MAX_PRICE):
+                        if gift_filter(gift_data, int(MIN_SUPPLY), int(MAX_SUPPLY), int(MIN_PRICE), int(MAX_PRICE)):
                             gift_id = gift_data['id']
-                            buy_gift(client, int(MY_CHANNEL_ID), gift_id)
+                            buy_gift(client, MY_CHANNEL_ID, gift_id)
                             print(f'Bought a gift: {gift_data['id']}\n'
                                 f'supply: {gift_data['availability_total']}\n'
                                 f'price: {gift_data['stars']}\n')

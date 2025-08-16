@@ -3,3 +3,4 @@ __pycache__/
 .env
 session.session
 dark_list.txt
+all_gifts.txt
